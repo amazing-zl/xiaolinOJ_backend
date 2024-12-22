@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 创建请求
+ * 创建题目请求
  */
 @Data
 public class QuestionAddRequest implements Serializable {
@@ -34,7 +34,7 @@ public class QuestionAddRequest implements Serializable {
     /**
      * 判题用例（json 数组）
      */
-    private JudgeCase judgeCase;
+    private List<JudgeCase> judgeCase;
 
     /**
      * 判题配置（json 对象）

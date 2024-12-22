@@ -116,9 +116,14 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question>
         return queryWrapper;
     }
 
+    /**
+     // 返回脱敏类
+     * @param question
+     * @param request
+     * @return
+     */
     @Override
     public QuestionVO getQuestionVO(Question question, HttpServletRequest request) {
-        // 返回脱敏类
         QuestionVO questionVO = QuestionVO.objToVo(question);
         long questionId = question.getId();
         // 1. 关联查询用户信息

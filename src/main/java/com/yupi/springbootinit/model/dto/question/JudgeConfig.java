@@ -1,5 +1,7 @@
 package com.yupi.springbootinit.model.dto.question;
 
+import lombok.Data;
+
 /**
  * @ClassName JudgeCase
  * @Description json串对应实体类，判题配置类
@@ -12,6 +14,7 @@ package com.yupi.springbootinit.model.dto.question;
  * ]
  * @Author zhanglin
  */
+@Data
 public class JudgeConfig {
 
     /**

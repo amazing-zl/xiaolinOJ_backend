@@ -50,10 +50,10 @@ public class QuestionVO implements Serializable {
      */
     private Integer acceptedNum;
 
-    /**
-     * 判题用例（json 数组）
-     */
-    private String judgeCase;
+//    /**
+//     * 判题用例（json 数组）
+//     */
+//    private JudgeCase judgeCase;
 
     /**
      * 判题配置（json 对象）
@@ -90,7 +90,6 @@ public class QuestionVO implements Serializable {
      */
     private UserVO userVO;
 
-    @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
     /**
@@ -133,9 +132,12 @@ public class QuestionVO implements Serializable {
         BeanUtils.copyProperties(question, questionVO);
         List<String> taglist = JSONUtil.toList(question.getTags(), String.class);
         questionVO.setTags(taglist);
-        String judgeConfig = question.getJudgeConfig();
+
+        String judgeConfigStr = question.getJudgeConfig();
+        System.out.println("judgeConfigStr:"+judgeConfigStr);
         // 由于在questionVo中judgeConfig为JudgeCongid类，所以需要对judgeConfig字符串进行转换，转换为对应实体类
-        questionVO.setJudgeConfig(JSONUtil.toBean(judgeConfig,JudgeConfig.class));
+        JudgeConfig bean = JSONUtil.toBean(judgeConfigStr, JudgeConfig.class);
+        questionVO.setJudgeConfig(bean);
         return questionVO;
     }
 }

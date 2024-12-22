@@ -1,5 +1,7 @@
 package com.yupi.springbootinit.model.dto.question;
 
+import lombok.Data;
+
 /**
  * @ClassName JudgeCase
  * @Description json串对应的实体类，判题用例
@@ -11,6 +13,7 @@ package com.yupi.springbootinit.model.dto.question;
  * ]
  * @Author zhanglin
  */
+@Data
 public class JudgeCase {
     /**
      * 输入用例

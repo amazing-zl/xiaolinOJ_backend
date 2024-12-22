@@ -1,10 +1,15 @@
 package com.yupi.springbootinit.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yupi.springbootinit.annotation.AuthCheck;
 import com.yupi.springbootinit.common.BaseResponse;
 import com.yupi.springbootinit.common.ErrorCode;
 import com.yupi.springbootinit.common.ResultUtils;
+import com.yupi.springbootinit.constant.UserConstant;
 import com.yupi.springbootinit.exception.BusinessException;
+import com.yupi.springbootinit.model.dto.question.QuestionQueryRequest;
 import com.yupi.springbootinit.model.dto.questionsubmit.QuestionSubmitAddRequest;
+import com.yupi.springbootinit.model.entity.Question;
 import com.yupi.springbootinit.model.entity.User;
 import com.yupi.springbootinit.service.QuestionSubmitService;
 import com.yupi.springbootinit.service.UserService;
@@ -21,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
  * 题目提交接口
  */
 @RestController
-@RequestMapping("/post_thumb")
+@RequestMapping("/question_thumb")
 @Slf4j
 public class QuestionSubmitController {
 
@@ -50,6 +55,23 @@ public class QuestionSubmitController {
 
         // 返回题目id
         return ResultUtils.success(questionSubmitId);
+    }
+
+    /**
+     * 分页获取题目提交列表（除了管理员之外，其他用户只能获得非答案的公开信息）
+     *
+     * @param questionQueryRequest
+     * @return
+     */
+    @PostMapping("/list/page")
+    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+    public BaseResponse<Page<Question>> listQuestionByPage(@RequestBody QuestionQueryRequest questionQueryRequest,
+                                                           HttpServletRequest request) {
+        long current = questionQueryRequest.getCurrent();
+        long size = questionQueryRequest.getPageSize();
+        Page<Question> questionPage = questionService.page(new Page<>(current, size),
+                questionService.getQueryWrapper(questionQueryRequest));
+        return ResultUtils.success(questionPage);
     }
 
 }
